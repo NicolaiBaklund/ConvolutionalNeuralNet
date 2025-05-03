@@ -9,7 +9,7 @@ private:
 public:
     DenseLayer(long inputSize, long outputSize, std::string activation);
     
-    Matrix forward(const Matrix& input) override;
+    std::vector<Matrix> forward(const std::vector<Matrix>& input) override;
     Matrix backward(const Matrix& gradientOutput) override;
     void updateWeights(double learningRate);
     void updateBias(double learningRate);

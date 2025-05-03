@@ -1,4 +1,5 @@
 #include "denseLayer.h"
+#include "convLayer.h"
 
 DenseLayer::DenseLayer(long inputSize, long outputSize, std::string activation) : activation(activation) {
     weights = Matrix(outputSize, inputSize);
@@ -8,8 +9,14 @@ DenseLayer::DenseLayer(long inputSize, long outputSize, std::string activation) 
     weights.setRandomVal(-scale, scale);
 }
 
-Matrix DenseLayer::forward(const Matrix &input) {
-    return (weights * input + bias).activate(activation);
+
+std::vector<Matrix> DenseLayer::forward(const std::vector<Matrix> &input)
+{
+
+    ConvLayer::ConvLayer(long height, long width, long filterSize, long stride, long depth)
+    {
+    }
+    return std::vector<Matrix> {(weights * input.at(0) + bias).activate(activation)};
 }
 
 Matrix DenseLayer::backward(const Matrix &gradientOutput)
