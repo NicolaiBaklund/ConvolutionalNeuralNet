@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/linAlg",
-                "${workspaceFolder}/layers"
+                "${workspaceFolder}/layers",
+                "${workspaceFolder}/utility"
             ],
             "defines": [
                 "_DEBUG",

@@ -5,11 +5,13 @@
 class DenseLayer : public Layer{
 private:
     Matrix weights, bias, inputCache;
+    std::string activation;
 public:
-    DenseLayer(long inputSize, long outputSize);
+    DenseLayer(long inputSize, long outputSize, std::string activation);
     
     Matrix forward(const Matrix& input) override;
     Matrix backward(const Matrix& gradientOutput) override;
     void updateWeights(double learningRate);
+    void updateBias(double learningRate);
 
 };

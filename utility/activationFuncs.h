@@ -5,4 +5,8 @@ double sigmoid(double x);
 
 double reLu(double x);
 
-Matrix softMax(const Matrix& input);
+double leakyReLu(double x);
+
+double dReLu(double x);
+
+double dSigmoid(double x);

@@ -1,5 +1,6 @@
 #pragma once
 #include "utils.h"
+#include "activationFuncs.h"
 #include <format>
 #include <iostream>
 #include <vector>
@@ -14,10 +15,10 @@ public:
     Matrix(long rows, long cols);
     Matrix(const Matrix& m);
     Matrix() = default;
-    Matrix operator=(Matrix m2);
+    Matrix& operator=(const Matrix& m2);
     //Move functionality
     Matrix(Matrix && other) noexcept;
-    Matrix operator=(Matrix&& other) noexcept;
+    Matrix& operator=(Matrix&& other) noexcept;
 
     friend std::ostream& operator<<(std::ostream& os, Matrix& m);
     long getRows() const {return rows;}
@@ -36,5 +37,5 @@ public:
     void setRandomVal(double lowerBound, double upperBound);
     Matrix transposed() const;
     Matrix hadamard(const Matrix& m2) const;
-
+    Matrix activate(std::string func) const;
 };
