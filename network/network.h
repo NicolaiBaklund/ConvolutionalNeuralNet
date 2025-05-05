@@ -7,9 +7,11 @@
 class Network {
 private:
     std::vector<Layer*> layers;
-
+    double learningRate;
+    int inputLayerRows, inputLayerCols, outputLayerSize;
+    std::vector<std::string> activationFuncs;
 
 public:
-    Network();
+    Network(int inputLayerRows, int inputLayerCols, std::vector<int> hiddenLayerSizes, int outputLayerSize, std::vector<std::string> activationFuncs, bool convolutional = false);
     Matrix feedForward(const Matrix& input);
 };

@@ -10,16 +10,12 @@ DenseLayer::DenseLayer(long inputSize, long outputSize, std::string activation) 
 }
 
 
-std::vector<Matrix> DenseLayer::forward(const std::vector<Matrix> &input)
-{
-
-    ConvLayer::ConvLayer(long height, long width, long filterSize, long stride, long depth)
-    {
-    }
+std::vector<Matrix> DenseLayer::forward(const std::vector<Matrix> &input) {
+    inputCache = (weights * input.at(0) + bias);
     return std::vector<Matrix> {(weights * input.at(0) + bias).activate(activation)};
 }
 
 Matrix DenseLayer::backward(const Matrix &gradientOutput)
 {
-    return Matrix();
+    
 }

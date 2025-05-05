@@ -5,11 +5,11 @@
 
 class ConvLayer : public Layer {
 private:
-    long height, width, kernelSize, stride, depth;
+    int height, width, kernelSize, stride, depth;
     std::vector<Matrix> kernels;
     std::vector<double> biases;
 public:
-    ConvLayer(long height, long width, long kernelSize, long stride, long depth);
+    ConvLayer(int height, int width, int kernelSize, int stride, int depth);
     double getFeature(const Matrix& input, const Matrix& kernel, int indexRow, int indexCol, double bias);
     std::vector<Matrix> forward(const std::vector<Matrix>& input) override;
 
