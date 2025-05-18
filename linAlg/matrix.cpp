@@ -14,10 +14,10 @@ Matrix::Matrix(long rows, long cols)
 Matrix::Matrix(const Matrix &m) : rows(m.rows), cols(m.cols), data(m.data) {}
 
 //Copy swap idiom
-Matrix Matrix::operator=(Matrix m2) {
-    std::swap(data, m2.data);
-    std::swap(rows, m2.rows);
-    std::swap(cols, m2.cols);
+Matrix& Matrix::operator=(const Matrix& m2) {
+    Matrix copy(m2);
+    std::swap(*this, copy);
+    return *this;
 }
 
 //Move constructor, to avoid unecessary copying when initializing a new matrix with an rvalue.
@@ -28,7 +28,7 @@ Matrix::Matrix(Matrix &&other) noexcept
 }
 
 //Move operator, to avoid unecessary copying when assigning an rvalue to a matrix.
-Matrix Matrix::operator=(Matrix &&other) noexcept {
+Matrix& Matrix::operator=(Matrix &&other) noexcept {
     if (this != &other){
         data = std::move(other.data);
         rows = other.rows;
@@ -192,4 +192,64 @@ Matrix Matrix::hadamard(const Matrix &m2) const {
     }
 
     return product;
+}
+
+//Able to apply a number of different activation functions
+Matrix Matrix::activate(std::string func) const {
+    Matrix activatedMatrix(rows, cols);
+    if (func == "sigmoid"){
+        for (size_t i = 0; i < rows; i++){
+            for (size_t j = 0; j < cols; j++){
+                activatedMatrix.at(i, j) = sigmoid(this->at(i, j));
+            }
+        }
+    }
+    else if (func == "reLu"){
+        for (size_t i = 0; i < rows; i++){
+            for (size_t j = 0; j < cols; j++){
+                activatedMatrix.at(i, j) = reLu(this->at(i, j));
+            }
+        }
+    }
+    else if (func == "softmax") {
+        double max_val = data[0];
+      
+        for (size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < this->getCols(); ++j) {
+                if (this->at(i, j) > max_val) {
+                    max_val = this->at(i, j);
+                }
+            }
+        }
+    
+        double exponential_sum = 0.0;
+        for (size_t i = 0; i < rows; ++i) { 
+            for (size_t j = 0; j < cols; ++j) {
+                double exponential = std::exp(this->at(i, j) - max_val);
+                exponential_sum += exponential;
+                activatedMatrix.at(i, j) = exponential;
+            }
+        }
+    
+        // Normalize by the sum of exponentials
+        for (size_t i = 0; i < rows; ++i) {
+            for (size_t j = 0; j < cols; ++j) {
+                activatedMatrix.at(i, j) /= exponential_sum;
+            }
+        }
+    }
+    else if (func == "leakyReLu") {
+        for (size_t i = 0; i < rows; i++) {
+            for (size_t j = 0; j < cols; j++) {
+                activatedMatrix.at(i, j) = leakyReLu(this->at(i, j));
+            }
+        }
+    }
+    else if (func == ""){
+        activatedMatrix = *this;
+    }
+    else {
+        throw std::invalid_argument("Unknown activation function: " + func);
+    }
+    return activatedMatrix;
 }
